@@ -3,56 +3,96 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Magazzino Filamenti 3D Cloud</title>
+    <title>Magazzino Giuseppe Salerno</title>
     <style>
         body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: #f0f2f5; margin: 0; padding: 20px; color: #333; }
-        .container { max-width: 1000px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
-        h1 { color: #1a3a5a; text-align: center; margin-bottom: 30px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
-        .form-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; }
-        input, select, button { padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; }
-        button { cursor: pointer; background-color: #27ae60; color: white; border: none; font-weight: 600; transition: all 0.3s; }
+        .container { max-width: 1100px; margin: auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        
+        header { text-align: center; margin-bottom: 30px; border-bottom: 3px solid #2c3e50; padding-bottom: 15px; }
+        h1 { color: #1a3a5a; margin: 0; font-size: 28px; }
+        h2 { color: #7f8c8d; font-size: 18px; margin: 5px 0 0 0; font-weight: 400; }
+        
+        .form-group { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 12px; margin-bottom: 30px; padding: 20px; background: #f8f9fa; border-radius: 8px; border: 1px solid #e9ecef; align-items: end; }
+        label { display: block; font-size: 12px; font-weight: bold; margin-bottom: 5px; color: #555; }
+        input, select, button { width: 100%; padding: 12px; border: 1px solid #ced4da; border-radius: 6px; font-size: 14px; box-sizing: border-box; }
+        
+        .range-container { grid-column: span 1; }
+        input[type="range"] { padding: 0; cursor: pointer; }
+
+        button { cursor: pointer; background-color: #27ae60; color: white; border: none; font-weight: 600; transition: 0.3s; height: 45px; }
         button:hover { background-color: #219150; }
         button:disabled { background-color: #95a5a6; }
+
         .table-container { overflow-x: auto; }
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; }
-        th, td { text-align: left; padding: 15px; border-bottom: 1px solid #edf2f7; }
-        th { background-color: #1a3a5a; color: white; }
-        .badge { padding: 5px 10px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; text-transform: uppercase; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; min-width: 800px; }
+        th, td { text-align: left; padding: 12px; border-bottom: 1px solid #edf2f7; font-size: 14px; }
+        th { background-color: #1a3a5a; color: white; text-transform: uppercase; }
+        
+        .badge { padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; color: white; text-transform: uppercase; }
         .pla { background: #3498db; } .abs { background: #e67e22; } .petg { background: #9b59b6; } .tpu { background: #1abc9c; } .asa { background: #d35400; }
+        
+        .progress-bg { background: #eee; border-radius: 10px; width: 100px; height: 12px; display: inline-block; vertical-align: middle; }
+        .progress-fill { background: #2ecc71; height: 100%; border-radius: 10px; transition: width 0.5s; }
+        .id-text { font-family: monospace; font-weight: bold; color: #2c3e50; background: #ecf0f1; padding: 2px 5px; border-radius: 3px; }
+
         #loading { text-align: center; padding: 20px; font-style: italic; color: #7f8c8d; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <h1>📦 Magazzino Filamenti Cloud</h1>
+    <header>
+        <h1>Magazzino Filamenti</h1>
+        <h2>di Giuseppe Salerno Soffitta</h2>
+    </header>
 
     <div class="form-group">
-        <select id="tipo">
-            <option value="PLA">PLA</option>
-            <option value="ABS">ABS</option>
-            <option value="PETG">PETG</option>
-            <option value="TPU">TPU</option>
-            <option value="ASA">ASA</option>
-        </select>
-        <input type="text" id="colore" placeholder="Colore">
-        <input type="text" id="fornitore" placeholder="Fornitore">
-        <input type="date" id="dataAcquisto">
-        <input type="number" id="prezzo" placeholder="Prezzo (€)" step="0.01">
+        <div>
+            <label>Materiale</label>
+            <select id="tipo">
+                <option value="PLA">PLA</option>
+                <option value="ABS">ABS</option>
+                <option value="PETG">PETG</option>
+                <option value="TPU">TPU</option>
+                <option value="ASA">ASA</option>
+            </select>
+        </div>
+        <div>
+            <label>Colore</label>
+            <input type="text" id="colore" placeholder="es. Rosso">
+        </div>
+        <div>
+            <label>Fornitore</label>
+            <input type="text" id="fornitore" placeholder="es. Sunlu">
+        </div>
+        <div>
+            <label>Data Acquisto</label>
+            <input type="date" id="dataAcquisto">
+        </div>
+        <div>
+            <label>Prezzo (€)</label>
+            <input type="number" id="prezzo" step="0.01">
+        </div>
+        <div class="range-container">
+            <label>Quantità Residua: <span id="valoreRange">100</span>%</label>
+            <input type="range" id="consumo" min="0" max="100" value="100" oninput="document.getElementById('valoreRange').innerText = this.value">
+        </div>
         <button id="addBtn" onclick="aggiungiBobina()">Aggiungi</button>
     </div>
 
-    <div id="loading">Caricamento inventario in corso...</div>
+    <div id="loading">Sincronizzazione con il database di Giuseppe...</div>
 
     <div class="table-container">
         <table id="tabellaMagazzino" style="display: none;">
             <thead>
                 <tr>
+                    <th>ID univoco</th>
                     <th>Materiale</th>
                     <th>Colore</th>
                     <th>Fornitore</th>
                     <th>Data</th>
                     <th>Prezzo</th>
+                    <th>Stato Residuo</th>
                 </tr>
             </thead>
             <tbody id="corpoTabella"></tbody>
@@ -61,8 +101,8 @@
 </div>
 
 <script>
-    // URL configurato correttamente
     const SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwp_foY9HgqW0PPoPfn00to_Y2ApM_z6vAoQ0Q_jZvoG93wZO6o_holIo4KfbPiOqpHsA/exec"; 
+    let totaleRighe = 0;
 
     async function caricaDati() {
         try {
@@ -70,36 +110,51 @@
             const dati = await response.json();
             const corpo = document.getElementById('corpoTabella');
             corpo.innerHTML = '';
+            totaleRighe = dati.length;
             
             dati.forEach(item => {
+                const perc = item.consumo || 100;
                 corpo.innerHTML += `<tr>
+                    <td><span class="id-text">${item.id || 'N/A'}</span></td>
                     <td><span class="badge ${item.tipo.toLowerCase()}">${item.tipo}</span></td>
-                    <td>${item.colore || '-'}</td>
-                    <td>${item.fornitore || '-'}</td>
-                    <td>${item.data || '-'}</td>
-                    <td>€ ${parseFloat(item.prezzo || 0).toFixed(2)}</td>
+                    <td>${item.colore}</td>
+                    <td>${item.fornitore}</td>
+                    <td>${item.data}</td>
+                    <td>€ ${parseFloat(item.prezzo).toFixed(2)}</td>
+                    <td>
+                        <div class="progress-bg"><div class="progress-fill" style="width: ${perc}%"></div></div>
+                        <span style="font-size: 11px;">${perc}%</span>
+                    </td>
                 </tr>`;
             });
 
             document.getElementById('loading').style.display = 'none';
             document.getElementById('tabellaMagazzino').style.display = 'table';
         } catch (error) {
-            document.getElementById('loading').innerHTML = "❌ Errore di connessione al database.";
-            console.error(error);
+            document.getElementById('loading').innerHTML = "❌ Errore. Verifica la connessione.";
         }
     }
 
     async function aggiungiBobina() {
         const btn = document.getElementById('addBtn');
+        const tipo = document.getElementById('tipo').value;
+        const colore = document.getElementById('colore').value;
+        const fornitore = document.getElementById('fornitore').value;
+        
+        // Generazione Codice ID: Tipo(3) + Colore(2) + Fornitore(2) + N. Progressivo
+        const idGenerato = `${tipo}-${colore.substring(0,3).toUpperCase()}-${fornitore.substring(0,3).toUpperCase()}-${(totaleRighe + 1).toString().padStart(3, '0')}`;
+
         const dati = {
-            tipo: document.getElementById('tipo').value,
-            colore: document.getElementById('colore').value,
-            fornitore: document.getElementById('fornitore').value,
+            tipo: tipo,
+            colore: colore,
+            fornitore: fornitore,
             data: document.getElementById('dataAcquisto').value,
-            prezzo: document.getElementById('prezzo').value
+            prezzo: document.getElementById('prezzo').value,
+            id: idGenerato,
+            consumo: document.getElementById('consumo').value
         };
 
-        if (!dati.colore || !dati.data) return alert("Compila i campi principali!");
+        if (!dati.colore || !dati.data) return alert("Compila i campi obbligatori!");
 
         btn.disabled = true;
         btn.innerText = "Salvataggio...";
@@ -110,16 +165,14 @@
                 mode: "no-cors",
                 body: JSON.stringify(dati)
             });
-            
-            alert("Inviato! La tabella si aggiornerà tra pochi secondi.");
-            setTimeout(() => location.reload(), 1500);
+            alert("Salvato nel database di Giuseppe!");
+            location.reload();
         } catch (error) {
-            alert("Errore nel salvataggio.");
+            alert("Errore salvataggio.");
             btn.disabled = false;
         }
     }
 
-    // Avvio immediato
     caricaDati();
 </script>
 </body>
